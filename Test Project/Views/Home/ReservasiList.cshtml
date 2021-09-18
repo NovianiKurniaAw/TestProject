@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Test_Project.tblT_Reservasi>
+
+@{
+    ViewBag.Title = "List Reservasi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="form-group">
+    <label>Ruangan</label>
+    <div class="col-md-10">
+        @Html.DropDownList("Ruangan_FK", ViewBag.listRuangan as IEnumerable<SelectListItem>)
+        <input type="submit" value="Cari" name='button' onclick="cari()" />
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ruangan_FK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubjectReservasi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TanggalReservasi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JamMulai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JamSelesai)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ruangan_FK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubjectReservasi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TanggalReservasi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JamMulai)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JamSelesai)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Reservasi_PK }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Reservasi_PK })
+        </td>
+    </tr>
+}
+</table>
+<script>
+    function cari() {
+        const idruangan = $('#Ruangan_FK').val()
+        window.location.href = '/home/reservasilist?idruangan=' + idruangan
+    }
+</script>

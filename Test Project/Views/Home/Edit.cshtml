@@ -1,0 +1,161 @@
+﻿@model Test_Project.tblT_Reservasi
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .custom-hide {
+        display: none
+    }
+</style>
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("PostEdit", "Home"))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>tblT_Reservasi</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Reservasi_PK)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Ruangan_FK, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Ruangan_FK, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" }  })
+            @Html.ValidationMessageFor(model => model.Ruangan_FK, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SubjectReservasi, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SubjectReservasi, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SubjectReservasi, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TanggalReservasi, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TanggalReservasi, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TanggalReservasi, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.JamMulai, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="ddlJamMulai" onchange="setJamMulai()" class="form-control">
+                <option value="01:00:00">1</option>
+                <option value="02:00:00">2</option>
+                <option value="03:00:00">3</option>
+                <option value="04:00:00">4</option>
+                <option value="05:00:00">5</option>
+                <option value="06:00:00">6</option>
+                <option value="07:00:00">7</option>
+                <option value="08:00:00">8</option>
+                <option value="09:00:00">9</option>
+                <option value="10:00:00">10</option>
+                <option value="11:00:00">11</option>
+                <option value="12:00:00">12</option>
+                <option value="13:00:00">13</option>
+                <option value="14:00:00">14</option>
+                <option value="15:00:00">15</option>
+                <option value="16:00:00">16</option>
+                <option value="17:00:00">17</option>
+                <option value="18:00:00">18</option>
+                <option value="19:00:00">19</option>
+                <option value="20:00:00">20</option>
+                <option value="21:00:00">21</option>
+                <option value="22:00:00">22</option>
+                <option value="23:00:00">23</option>
+                <option value="24:00:00">24</option>
+            </select>
+            @Html.EditorFor(model => model.JamMulai, new { htmlAttributes = new { @class = "form-control custom-hide" } })
+            @Html.ValidationMessageFor(model => model.JamMulai, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.JamSelesai, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="ddlJamSelesai" onchange="setJamSelesai()" class="form-control">
+                <option value="01:00:00">1</option>
+                <option value="02:00:00">2</option>
+                <option value="03:00:00">3</option>
+                <option value="04:00:00">4</option>
+                <option value="05:00:00">5</option>
+                <option value="06:00:00">6</option>
+                <option value="07:00:00">7</option>
+                <option value="08:00:00">8</option>
+                <option value="09:00:00">9</option>
+                <option value="10:00:00">10</option>
+                <option value="11:00:00">11</option>
+                <option value="12:00:00">12</option>
+                <option value="13:00:00">13</option>
+                <option value="14:00:00">14</option>
+                <option value="15:00:00">15</option>
+                <option value="16:00:00">16</option>
+                <option value="17:00:00">17</option>
+                <option value="18:00:00">18</option>
+                <option value="19:00:00">19</option>
+                <option value="20:00:00">20</option>
+                <option value="21:00:00">21</option>
+                <option value="22:00:00">22</option>
+                <option value="23:00:00">23</option>
+                <option value="24:00:00">24</option>
+            </select>
+            @Html.EditorFor(model => model.JamSelesai, new { htmlAttributes = new { @class = "form-control custom-hide" } })
+            @Html.ValidationMessageFor(model => model.JamSelesai, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            function setTanggalReservasi() {
+                const nilai = $('#tglReservasi').val()
+                $('#TanggalReservasi').val(nilai)
+            }
+            function setJamSelesai() {
+                const nilai = $('#ddlJamSelesai').val()
+                $('#JamSelesai').val(nilai)
+            }
+            function setJamMulai() {
+                const nilai = $('#ddlJamMulai').val()
+                $('#JamMulai').val(nilai)
+            }
+            function getTanggalReservasi() {
+                const nilai = $('#TanggalReservasi').val()
+                $('#tglReservasi').val(nilai)
+            }
+            function getJamSelesai() {
+                const nilai = $('#JamSelesai').val()
+                $('#ddlJamSelesai').val(nilai)
+            }
+            function getJamMulai() {
+                const nilai = $('#JamMulai').val()
+                $('#ddlJamMulai').val(nilai)
+            }
+            getTanggalReservasi()
+            getJamMulai()
+            getJamSelesai()
+        </script>
+    }
+
